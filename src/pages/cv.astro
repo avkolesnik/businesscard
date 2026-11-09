@@ -1,0 +1,449 @@
+---
+// src/pages/cv.astro
+const name = "Александр Колесник";
+const role = "Системный аналитик";
+const email = "kolesnik.al.vi@gmail.com";
+const telegram = "https://t.me/avkolesnik"; 
+const location = "г. Москва";
+const githubLink = "https://github.com/avkolesnik/";
+const setkaLink = "https://set.ki/account/CKG3bwn";
+
+// Данные опыта (вынесены сюда для удобства редактирования)
+const experience = [
+    {
+        company: "Пост Модерн Текнолоджи",
+        project: "МИС (Медицинская информационная система)",
+        period: "Окт 2024 — Сен 2026",
+        role: "Системный аналитик",
+        achievements: [
+            "Спроектировал модуль «Кадровая система»: от сбора требований до модели данных и постановки задач.",
+            "Реализовал единую систему коммуникаций (E-mail, SMS, WebSocket) с поддержкой шаблонов и очередей доставки.",
+            "Интегрировал электронную подпись (ЭП) и авторизацию через Keycloak (SSO/RBAC).",
+            "Провел реверс-инжиниринг legacy-решений, обеспечил бесшовную миграцию логики."
+        ]
+    },
+    {
+        company: "WeMakeTeam",
+        project: "ITSM-система",
+        period: "Дек 2023 — Окт 2024",
+        role: "Системный аналитик",
+        achievements: [
+            "Спроектировал сложный блок «Графики работы» (учет федеральных/региональных праздников, смены).",
+            "Разработал «Личный кабинет сотрудника»: UX/UI согласование, модель данных, User Stories.",
+            "Внедрил Living Documentation в Confluence, сократив время онбординга новых участников команды.",
+            "Сопровождал вывод решения в промышленную эксплуатацию (post-release support)."
+        ]
+    },
+    {
+        company: "РСХБ-Интех",
+        project: "DWH & Аналитическая отчетность",
+        period: "Янв 2022 — Дек 2023",
+        role: "Системный аналитик",
+        achievements: [
+            "Транслировал бизнес-метрики в технические спецификации для SQL-разработчиков витрин данных.",
+            "Оптимизировал запросы к источникам, снизив время формирования критических отчетов.",
+            "Разрабатывал тест-кейсы и ПМИ, проводил приемочное тестирование (PSI) совместно с бизнесом."
+        ]
+    },
+    {
+        company: "Банковский сектор (Уралсиб, UniCredit)",
+        project: "Системы мотивации и планирования целей",
+        period: "Ноя 2019 — Янв 2022",
+        role: "Главный эксперт / Системный аналитик",
+        achievements: [
+            "Проектировал доменную модель системы KPI: справочники, формулы расчета, правила валидации.",
+            "Моделировал процессы AS-IS/TO-BE (BPMN/UML), выявлял узкие места в расчетах бонусов.",
+            "Формировал требования к BI-дашбордам и прогнозным моделям розничного бизнеса."
+        ]
+    }
+];
+---
+
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>{name} | CV</title>
+    <style is:global>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --light-gray: #f4f4f4;
+            --border-color: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 850px; /* Ширина примерно как лист А4 */
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 0 0 5px 0;
+            color: var(--primary-color);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 0.9rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Summary Block */
+        .summary p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category h3 {
+            font-size: 1rem;
+            margin: 0 0 5px 0;
+            color: var(--primary-color);
+        }
+
+        .skill-tags {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .skill-tags li {
+            display: inline-block;
+            margin-right: 8px;
+            margin-bottom: 4px;
+        }
+
+        /* Experience Cards */
+        .job-card {
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 5px;
+        }
+
+        .company-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+
+        .date-range {
+            color: #777;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .project-role {
+            font-style: italic;
+            color: #555;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .achievements-list {
+            padding-left: 20px;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .achievements-list li {
+            margin-bottom: 4px;
+        }
+
+        /* Education & Courses */
+        .edu-item {
+            margin-bottom: 10px;
+        }
+        
+        .edu-title {
+            font-weight: bold;
+        }
+        
+        .edu-sub {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Download Button */
+        .download-btn-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        .btn-download {
+            background-color: #2ecc71;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s;
+            font-size: 1rem;
+        }
+        
+        .btn-download:hover {
+            transform: scale(1.05);
+            background-color: #27ae60;
+        }
+
+        /* PRINT STYLES (PDF Export) */
+        @media print {
+            body {
+                margin: 0;
+                padding: 1cm; /* Поля листа */
+                font-size: 10pt;
+                color: black;
+                background: white;
+            }
+            
+            .container {
+                margin: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+
+            .download-btn-container {
+                display: none !important; /* Прячем кнопку */
+            }
+
+            a {
+                color: black;
+                text-decoration: none;
+            }
+
+            h1, h2, h3 {
+                page-break-after: avoid;
+            }
+
+            .job-card, .edu-item {
+                page-break-inside: avoid;
+            }
+            
+            /* Убираем тени и лишние цвета для экономии чернил */
+            * {
+                box-shadow: none !important;
+                text-shadow: none !important;
+            }
+            
+            header {
+                border-bottom: 1px solid black;
+            }
+            
+            h2 {
+                border-left: 2px solid black;
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header>
+        <h1>{name}</h1>
+        <div class="subtitle">{role}</div>
+        
+        <div class="contact-info">
+            <div class="contact-item">📍 {location}</div>
+            <div class="contact-item">📞 {phone}</div>
+            <div class="contact-item">✉️ <a href="mailto:{email}">{email}</a></div>
+            <div class="contact-item">✈️ <a href="https://t.me/{telegram.replace('@','')}" target="_blank">{telegram}</a></div>
+            <div class="contact-item">💻 <a href="{githubLink}" target="_blank">GitHub</a></div>
+            <div class="contact-item">🌐 <a href="/" target="_blank">Portfolio Site</a></div>
+        </div>
+    </header>
+
+    <!-- SUMMARY -->
+    <section class="summary">
+        <h2>О себе</h2>
+        <p>
+            Системный аналитик с опытом более 6 лет в проектировании высоконагруженных распределенных систем и интеграционных решений (FinTech, MedTech). 
+            Специализируюсь на микросервисной архитектуре, REST/gRPC API design и моделировании данных (PostgreSQL).
+        </p>
+        <br/>
+        <p>
+            Ключевые компетенции: полный цикл анализа (от сбора требований до PSI), разработка технической документации (OpenAPI, UML/BPMN), 
+            глубокая экспертиза в интеграциях (Kafka, ESB, WebSockets) и управление доступом (OAuth2, Keycloak). 
+            Английский B2. Готов к работе в международных продуктах.
+        </p>
+    </section>
+
+    <!-- SKILLS -->
+    <section>
+        <h2>Технические навыки</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Analysis & Modeling</h3>
+                <ul class="skill-tags">
+                    <li>UML (Class, Sequence)</li>
+                    <li>BPMN 2.0</li>
+                    <li>C4 Model</li>
+                    <li>PlantUML / Draw.io</li>
+                    <li>User Stories / Use Cases</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>API & Integration</h3>
+                <ul class="skill-tags">
+                    <li>RESTful API Design</li>
+                    <li>OpenAPI (Swagger)</li>
+                    <li>gRPC / SOAP</li>
+                    <li>Kafka / RabbitMQ</li>
+                    <li>WebSockets</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Data & DB</h3>
+                <ul class="skill-tags">
+                    <li>PostgreSQL (ERD)</li>
+                    <li>SQL (Complex Queries)</li>
+                    <li>DWH Concepts</li>
+                    <li>Redis</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Tools & Process</h3>
+                <ul class="skill-tags">
+                    <li>Jira / Confluence</li>
+                    <li>Git</li>
+                    <li>Postman</li>
+                    <li>Figma (Basic)</li>
+                    <li>Agile / Scrum</li>
+                </ul>
+            </div>
+             <div class="skill-category">
+                <h3>Security & Dev Context</h3>
+                <ul class="skill-tags">
+                    <li>OAuth 2.0 / OIDC</li>
+                    <li>Keycloak / RBAC</li>
+                    <li>JavaScript (Scripting)</li>
+                    <li>Python (Basics)</li>
+                    <li>Low-code Platforms</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section>
+        <h2>Опыт работы</h2>
+        
+        {experience.map(job => (
+            <div class="job-card">
+                <div class="job-header">
+                    <span class="company-name">{job.company}</span>
+                    <span class="date-range">{job.period}</span>
+                </div>
+                <div class="project-role">
+                    {job.project} • {job.role}
+                </div>
+                <ul class="achievements-list">
+                    {job.achievements.map(item => <li>{item}</li>)}
+                </ul>
+            </div>
+        ))}
+    </section>
+
+    <!-- EDUCATION -->
+    <section>
+        <h2>Образование и курсы</h2>
+        <div class="edu-item">
+            <div class="edu-title">Программная инженерия. Разработка ПО</div>
+            <div class="edu-sub">Университет Иннополис (2025)</div>
+        </div>
+        <div class="edu-item">
+            <div class="edu-title">Высшее образование</div>
+            <div class="edu-sub">ХГУЭП, Государственные и муниципальные финансы (2016)</div>
+        </div>
+         <div class="edu-item">
+            <div class="edu-title">SQL Academy</div>
+            <div class="edu-sub">Обучение SQL (2024)</div>
+        </div>
+    </section>
+
+</div>
+
+<!-- DOWNLOAD BUTTON -->
+<div class="download-btn-container">
+    <button onclick="window.print()" class="btn-download">
+        ⬇ Скачать PDF
+    </button>
+</div>
+
+</body>
+</html>

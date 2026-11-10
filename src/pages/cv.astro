@@ -65,249 +65,310 @@ const experience = [
     <meta charset="UTF-8" />
     <title>{name} | CV</title>
     <style is:global>
-        :root {
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --text-color: #333;
-            --light-gray: #f4f4f4;
-            --border-color: #ddd;
-        }
+    :root {
+        /* Цвета из основного лендинга */
+        --bg-dark: #111827;       /* gray-900 */
+        --text-light: #f3f4f6;    /* gray-100 */
+        --text-muted: #9ca3af;    /* gray-400 */
+        --accent-blue: #60a5fa;   /* blue-400 */
+        --accent-emerald: #34d399;/* emerald-400 */
+        --card-bg: rgba(31, 41, 55, 0.5); /* gray-800/50 */
+        --border-color: #374151;  /* gray-700 */
+        
+        /* Для печати переопределим позже */
+        --print-text: #000;
+        --print-bg: #fff;
+    }
 
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: var(--text-light);
+        background-color: var(--bg-dark);
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 850px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    header {
+        border-bottom: 2px solid var(--border-color);
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin: 0 0 5px 0;
+        /* Градиент как в заголовке лендинга */
+        background: linear-gradient(to right, var(--accent-blue), var(--accent-emerald));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        margin-bottom: 15px;
+    }
+
+    .contact-info {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        font-size: 0.9rem;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: var(--text-muted);
+    }
+
+    a {
+        color: var(--accent-blue);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    a:hover {
+        color: var(--accent-emerald);
+        text-decoration: underline;
+    }
+
+    section {
+        margin-bottom: 25px;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+        color: var(--text-light);
+        border-left: 4px solid var(--accent-blue);
+        padding-left: 10px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Summary Block */
+    .summary p {
+        margin: 0 0 10px 0;
+        font-size: 1rem;
+        color: var(--text-light);
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .skill-category {
+        background-color: var(--card-bg);
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+    }
+
+    .skill-category h3 {
+        font-size: 1rem;
+        margin: 0 0 10px 0;
+        color: var(--accent-emerald);
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 5px;
+    }
+
+    .skill-tags {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    .skill-tags li {
+        display: inline-block;
+        margin-right: 8px;
+        margin-bottom: 4px;
+    }
+
+    /* Experience Cards */
+    .job-card {
+        margin-bottom: 20px;
+        page-break-inside: avoid;
+        background-color: var(--card-bg);
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+    }
+
+    .job-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        margin-bottom: 5px;
+    }
+
+    .company-name {
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: var(--text-light);
+    }
+
+    .date-range {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        white-space: nowrap;
+    }
+
+    .project-role {
+        font-style: italic;
+        color: var(--accent-blue);
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+    }
+
+    .achievements-list {
+        padding-left: 20px;
+        margin: 0;
+        font-size: 0.95rem;
+        color: var(--text-light);
+    }
+
+    .achievements-list li {
+        margin-bottom: 4px;
+    }
+
+    /* Education & Courses */
+    .edu-item {
+        margin-bottom: 10px;
+        padding-left: 10px;
+        border-left: 2px solid var(--border-color);
+    }
+    
+    .edu-title {
+        font-weight: bold;
+        color: var(--text-light);
+    }
+    
+    .edu-sub {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    /* Download Button */
+    .download-btn-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 100;
+    }
+    
+    .btn-download {
+        background: linear-gradient(to right, var(--accent-blue), var(--accent-emerald));
+        color: white;
+        padding: 12px 24px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(96, 165, 250, 0.3);
+        cursor: pointer;
+        border: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+        font-size: 1rem;
+    }
+    
+    .btn-download:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(96, 165, 250, 0.4);
+    }
+
+    /* =========================================
+       PRINT STYLES (PDF Export) 
+       Здесь возвращаем всё к черно-белому виду
+       ========================================= */
+    @media print {
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: #fff;
+            background-color: white !important;
+            color: black !important;
+            margin: 0;
+            padding: 1cm;
+            font-size: 10pt;
+        }
+        
+        .container {
+            max-width: 100%;
             margin: 0;
             padding: 0;
-        }
-
-        .container {
-            max-width: 850px; /* Ширина примерно как лист А4 */
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        header {
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
         }
 
         h1 {
-            font-size: 2rem;
-            margin: 0 0 5px 0;
-            color: var(--primary-color);
+            background: none !important;
+            color: black !important;
+            -webkit-text-fill-color: black !important;
+            font-size: 1.8rem;
+            border-bottom: 1px solid #ccc;
         }
 
         .subtitle {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 15px;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            font-size: 0.9rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        a {
-            color: var(--accent-color);
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        section {
-            margin-bottom: 25px;
+            color: #555 !important;
         }
 
         h2 {
-            font-size: 1.3rem;
-            color: var(--primary-color);
-            border-left: 4px solid var(--accent-color);
-            padding-left: 10px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: black !important;
+            border-left-color: #333 !important;
         }
 
-        /* Summary Block */
-        .summary p {
-            margin: 0;
-            font-size: 1rem;
+        .contact-item, .contact-info {
+            color: #333 !important;
         }
 
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+        a {
+            color: #000 !important;
+            text-decoration: none !important;
+        }
+
+        /* Убираем фоны карточек и скругления */
+        .job-card, .skill-category, .edu-item {
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+            margin-bottom: 15px !important;
+            box-shadow: none !important;
         }
 
         .skill-category h3 {
-            font-size: 1rem;
-            margin: 0 0 5px 0;
-            color: var(--primary-color);
-        }
-
-        .skill-tags {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            font-size: 0.9rem;
-            color: #555;
-        }
-
-        .skill-tags li {
-            display: inline-block;
-            margin-right: 8px;
-            margin-bottom: 4px;
-        }
-
-        /* Experience Cards */
-        .job-card {
-            margin-bottom: 20px;
-            page-break-inside: avoid;
-        }
-
-        .job-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
-            margin-bottom: 5px;
-        }
-
-        .company-name {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: var(--primary-color);
-        }
-
-        .date-range {
-            color: #777;
-            font-size: 0.9rem;
-            white-space: nowrap;
+            color: black !important;
+            border-bottom: 1px dotted #999 !important;
         }
 
         .project-role {
-            font-style: italic;
-            color: #555;
-            font-size: 0.95rem;
-            margin-bottom: 8px;
+            color: #444 !important;
         }
 
         .achievements-list {
-            padding-left: 20px;
-            margin: 0;
-            font-size: 0.95rem;
+            color: black !important;
         }
 
-        .achievements-list li {
-            margin-bottom: 4px;
-        }
-
-        /* Education & Courses */
-        .edu-item {
-            margin-bottom: 10px;
-        }
-        
-        .edu-title {
-            font-weight: bold;
-        }
-        
-        .edu-sub {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        /* Download Button */
         .download-btn-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
+            display: none !important;
         }
         
-        .btn-download {
-            background-color: #2ecc71;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            cursor: pointer;
-            border: none;
-            transition: transform 0.2s;
-            font-size: 1rem;
+        /* Гарантируем разрыв страниц по логике блоков */
+        .job-card {
+            page-break-inside: avoid;
         }
-        
-        .btn-download:hover {
-            transform: scale(1.05);
-            background-color: #27ae60;
-        }
-
-        /* PRINT STYLES (PDF Export) */
-        @media print {
-            body {
-                margin: 0;
-                padding: 1cm; /* Поля листа */
-                font-size: 10pt;
-                color: black;
-                background: white;
-            }
-            
-            .container {
-                margin: 0;
-                padding: 0;
-                max-width: 100%;
-            }
-
-            .download-btn-container {
-                display: none !important; /* Прячем кнопку */
-            }
-
-            a {
-                color: black;
-                text-decoration: none;
-            }
-
-            h1, h2, h3 {
-                page-break-after: avoid;
-            }
-
-            .job-card, .edu-item {
-                page-break-inside: avoid;
-            }
-            
-            /* Убираем тени и лишние цвета для экономии чернил */
-            * {
-                box-shadow: none !important;
-                text-shadow: none !important;
-            }
-            
-            header {
-                border-bottom: 1px solid black;
-            }
-            
-            h2 {
-                border-left: 2px solid black;
-                color: black;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
 

@@ -1,0 +1,16 @@
+---
+// src/components/IconTelegram.astro
+// Можно передать размер через пропсы, если захочешь
+const { size = 16 } = Astro.props;
+---
+
+<svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width={size} 
+    height={size} 
+    fill="currentColor" 
+    viewBox="0 0 16 16" 
+    style="vertical-align: text-bottom; margin-right: 4px;"
+>
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.498 11.654c-.382 0-.588-.19-.588-.588V7.498h2.598v3.568c0 .398-.206.588-.588.588zm1.04-4.626H3.918V5.5h2.62v1.528zm3.04 4.626c-.382 0-.588-.19-.588-.588V7.498h2.598v3.568c0 .398-.206.588-.588.588zm1.04-4.626h-2.62V5.5h2.62v1.528z"/>
+</svg>

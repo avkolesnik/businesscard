@@ -1,4 +1,5 @@
 ---
+import TgIcon from '../components/tgicon.astro';
 // src/pages/cv.astro
 const name = "Александр Колесник";
 const role = "Системный аналитик";
@@ -382,7 +383,9 @@ const experience = [
         <div class="contact-info">
             <div class="contact-item">📍 {location}</div>
             <div class="contact-item">✉️ <a href="mailto:{email}">{email}</a></div>
-            <div class="contact-item">✈️ <a href="https://t.me/avkolesnik" target="_blank">{telegram}</a></div>
+            <div class="contact-item"><TgIcon />
+                <a href="https://t.me/{telegram.replace('@','')}" target="_blank">{telegram}</a>
+            </div>
             <div class="contact-item">💻 <a href={githubLink} target="_blank">GitHub</a></div>
             <div class="contact-item">🌐 <a href={portfoliosite} target="_blank">Portfolio Site</a></div>
         </div>

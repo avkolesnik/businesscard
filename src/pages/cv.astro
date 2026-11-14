@@ -1,5 +1,6 @@
 ---
 import TgIcon from '../components/tgicon.astro';
+import { Image } from 'astro:assets'
 // src/pages/cv.astro
 const name = "Александр Колесник";
 const role = "Системный аналитик";
@@ -101,7 +102,6 @@ experience.forEach(job => {
 const yearsTotal = Math.floor(totalMonthsWorked / 12);
 const monthsRemainder = totalMonthsWorked % 12;
 
-// Строка для вывода: "6 лет и 1 месяц" или "6 лет"
 let summaryText = "";
 if (yearsTotal > 0 && monthsRemainder > 0) {
     summaryText = `${yearsTotal} лет и ${monthsRemainder} мес.`;
@@ -430,7 +430,7 @@ if (yearsTotal > 0 && monthsRemainder > 0) {
     <!-- HEADER -->
     <header>
                 <!-- Фото профиля -->
-        <img 
+        <Image 
             src="/profile.jpg" 
             alt="Фото Александра Колесника" 
             width="120" 

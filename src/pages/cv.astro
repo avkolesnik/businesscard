@@ -59,6 +59,57 @@ const experience = [
         ]
     }
 ];
+
+const monthsMap = {
+    'Янв': 1, 'Фев': 2, 'Мар': 3, 'Апр': 4, 'Май': 5, 'Июн': 6,
+    'Июл': 7, 'Авг': 8, 'Сен': 9, 'Окт': 10, 'Ноя': 11, 'Дек': 12
+};
+
+function calculateMonths(periodString) {
+    // Разбиваем строку "Окт 2024 — Сен 2026" на части
+    const parts = periodString.split('—').map(s => s.trim());
+    if (parts.length !== 2) return 0;
+
+    const [startStr, endStr] = parts;
+    
+    // Парсим дату начала
+    const startMatch = startStr.match(/([А-Яа-я]+)\s(\d{4})/);
+    // Парсим дату конца
+    const endMatch = endStr.match(/([А-Яа-я]+)\s(\d{4})/);
+
+    if (!startMatch || !endMatch) return 0;
+
+    const startY = parseInt(startMatch[2]);
+    const startM = monthsMap[startMatch[1]] || 0;
+    const endY = parseInt(endMatch[2]);
+    const endM = monthsMap[endMatch[1]] || 0;
+
+    // Формула: (Год_конца * 12 + Месяц_конца) - (Год_начала * 12 + Месяц_начала) + 1
+    // +1 потому что мы считаем inclusive (и начало, и конец включительно)
+    let diff = (endY * 12 + endM) - (startY * 12 + startM) + 1;
+    
+    return diff > 0 ? diff : 0;
+}
+
+// Суммируем стаж по всем местам работы
+let totalMonthsWorked = 0;
+experience.forEach(job => {
+    totalMonthsWorked += calculateMonths(job.period);
+});
+
+// Конвертируем месяцы в годы и месяцы для вывода
+const yearsTotal = Math.floor(totalMonthsWorked / 12);
+const monthsRemainder = totalMonthsWorked % 12;
+
+// Строка для вывода: "6 лет и 1 месяц" или "6 лет"
+let summaryText = "";
+if (yearsTotal > 0 && monthsRemainder > 0) {
+    summaryText = `${yearsTotal} лет и ${monthsRemainder} мес.`;
+} else if (yearsTotal > 0) {
+    summaryText = `${yearsTotal} лет`;
+} else {
+    summaryText = `${monthsRemainder} мес.`;
+}
 ---
 
 <!doctype html>
@@ -378,6 +429,14 @@ const experience = [
 
     <!-- HEADER -->
     <header>
+                <!-- Фото профиля -->
+        <img 
+            src="/profile.jpg" 
+            alt="Фото Александра Колесника" 
+            width="120" 
+            height="120" 
+            style="border-radius: 50%; margin-bottom: 1rem; border: 2px solid #374151; float: left; margin-right: 15px;"
+        />
         <h1>{name}</h1>
         <div class="subtitle">{role}</div>
         
@@ -387,8 +446,8 @@ const experience = [
             <div class="contact-item"><TgIcon />
                 <a href={tgUrl} target="_blank">{telegram}</a>
             </div>
-            <div class="contact-item">💻 <a href={githubLink} target="_blank">GitHub</a></div>
-            <div class="contact-item">🌐 <a href={portfoliosite} target="_blank">{portfoliosite}</a></div>
+            <div class="contact-item">💻 <a href={githubLink} target="_blank">GitHub - {githubLink}</a></div>
+            <div class="contact-item">🌐 <a href={portfoliosite} target="_blank">Сайт-визитка - {portfoliosite}</a></div>
         </div>
     </header>
 
@@ -465,7 +524,10 @@ const experience = [
 
     <!-- EXPERIENCE -->
     <section>
-        <h2>Опыт работы</h2>
+        <h2 style="display: flex; justify-content: space-between; align-items: center;">
+            <span>Опыт работы</span>
+        <span style="font-size: 1rem; font-weight: normal; color: var(--text-muted); text-transform: none; letter-spacing: 0;">{summaryText}</span>
+        </h2>
         
         {experience.map(job => (
             <div class="job-card">
@@ -485,18 +547,22 @@ const experience = [
 
     <!-- EDUCATION -->
     <section>
-        <h2>Образование и курсы</h2>
-        <div class="edu-item">
-            <div class="edu-title">Программная инженерия. Разработка ПО</div>
-            <div class="edu-sub">Университет Иннополис (2025)</div>
-        </div>
+        <h2>Образование</h2>
         <div class="edu-item">
             <div class="edu-title">Высшее образование</div>
             <div class="edu-sub">ХГУЭП, Государственные и муниципальные финансы (2016)</div>
+            <div class="edu-sub"> Специалист, Финансы и Кредит </div>
+        </div>
+        <h2>Дополнительное образование и курсы</h2>
+        <div class="edu-item">
+            <div class="edu-title">Программная инженерия. Разработка ПО</div>
+            <div class="edu-sub">Университет Иннополис (2025)</div>
+            <div class="edu-sub">Курсы профессиональной переподготовки</div>
         </div>
          <div class="edu-item">
             <div class="edu-title">SQL Academy</div>
             <div class="edu-sub">Обучение SQL (2024)</div>
+            <div class="edu-sub">Повышение квалификации</div>
         </div>
     </section>
 

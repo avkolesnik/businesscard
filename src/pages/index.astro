@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/layout.astro';
 import { Image } from 'astro:assets'
+import avatar from '../../public/profile.jpg'; 
 // src/pages/index.astro
 const name = "Александр Колесник"; 
 const role = "System Analyst";
@@ -36,7 +37,7 @@ const tagline = "Превращаю хаос требований в четку�
 				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
 					<div>
               <Image 
-                src="/profile.jpg" 
+                src={avatar} 
                 alt="Фото Александра Колесника" 
                 width="120" 
                 height="120" 

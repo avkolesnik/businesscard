@@ -1,6 +1,7 @@
 ---
 import TgIcon from '../components/tgicon.astro';
-import { Image } from 'astro:assets'
+import { Image } from 'astro:assets';
+import avatar from '../../public/profile.jpg'; 
 // src/pages/cv.astro
 const name = "Александр Колесник";
 const role = "Системный аналитик";
@@ -431,7 +432,7 @@ if (yearsTotal > 0 && monthsRemainder > 0) {
     <header>
                 <!-- Фото профиля -->
         <Image 
-            src="/profile.jpg" 
+            src={avatar} 
             alt="Фото Александра Колесника" 
             width="120" 
             height="120" 
